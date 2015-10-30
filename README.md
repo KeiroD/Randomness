@@ -17,3 +17,7 @@ Should output the following when executed:
 ### Updating LPM to pull your OS's lid status
 
 Check `/proc/acpi/button/lid/` with `ls -lah` or just `ls -l` to get a listing of your `lid`. Or... just `ls -l /proc/acpi/button/lid` with laziness! You should get something similar to `LID0` for Linux Mint, or some variant of `LID` for other OSes.
+
+#### LPM license
+
+Originally created by `Vorell` on `irc.anthrochat.com` in `linuxfurs`.
