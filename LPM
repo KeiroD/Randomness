@@ -3,7 +3,7 @@
 
 # Define the variables
 bat_status=$(cat /sys/class/power_supply/BAT0/status)
-lid_status=$(cat /proc/acpi/button/lid/LID/state | awk '{print $2}')
+lid_status=$(cat /proc/acpi/button/lid/LID0/state | awk '{print $2}')
 
 # Evaluate if charging, and if lid is open. Sleep is appropriate.
 [[ $bat_status = "Discharging" ]] && [[ $lid_status != "open" ]] && pm-suspend
