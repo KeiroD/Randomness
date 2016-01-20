@@ -1,0 +1,129 @@
+#!/usr/bin/python
+
+"""
+   About: A simple script to fetch an IP address from a remote host
+   Version: 1.1
+
+   HISTORY
+   --------------------------------------------------------------------
+   Version 1.1 - 06/25/2012
+    * Fixed hanging on non-responsive hosts.
+    * Removed several non-responsive hosts from host list.
+    * Added option to verify hosts are still working.
+
+   Version 1.0 - 05/06/2012
+"""
+
+from urllib2 import urlopen
+from re import findall
+from os.path import isfile, dirname, join, basename
+from time import time
+from sys import exit, argv
+
+########################################################################
+# Config section
+
+# These hosts provide a simple plain text or minimal HTML
+# page with your IP address
+hosts = [
+   "http://www.formyip.com/",
+   "http://checkip.dyndns.org/",
+   "http://www.cmyip.com/",
+   "http://www.viewmyipaddress.com/",
+   "http://cfaj.freeshell.org/ipaddr.cgi",
+   "https://secure.informaction.com/ipecho/",
+   "http://icanhazip.com/",
+   "http://ipecho.net/plain",
+   "http://smart-ip.net/myip",
+]
+
+cache_update = 3600
+cache_name = "ipaddr_cache"
+
+# End Config
+########################################################################
+
+cache_name = join(dirname(argv[0]), cache_name)
+cache_stale = False
+cache_exists = False
+help = False
+verify=False
+
+# Fetch IP from remote host
+
+def fetchIP(host,data=None,timeout=10):
+   try:
+      r = urlopen(host,data,timeout)
+      h = r.read()
+      r.close()
+      return findall("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})", h)[-1]
+   except:
+      return None
+
+# Parse Options
+for option in argv[1:]:
+   opt = option.lower()
+   if opt == "--stale":
+      cache_stale = True
+   elif opt[:7] == "--host=":
+      host = option[7:]
+      cache_stale = True
+   elif opt == "--help":
+      help = True
+   elif opt == "--verify":
+      verify = True
+      cache_stale = True
+
+# Print help and exit
+if help:
+   print "Usage: %s [options]"%(basename(argv[0]))
+   print "Options:"
+   print "  --host=<hostURL>\tFetch IP address from hostURL."
+   print "  --stale\t\tDon't use cached IP address."
+   print "  --verify\t\tVerify all hosts are still working."
+   print "  --help\t\tThis message"
+   exit()
+
+
+# Check if a cache file exists
+if not isfile(cache_name):
+   cache_exists = False
+else:
+   cache_exists = True
+
+# If the cache exists use it unless it's stale
+if cache_exists and not cache_stale:
+   d = open(cache_name,"r").readlines()
+   if int(d[0]) > time() - cache_update:
+      print d[1]
+   else:
+      cache_stale = True
+
+h = False
+
+# Cache is stale or doesn't exist, lets get the IP
+if not cache_exists or cache_stale:
+   while True:
+      if not hosts:
+         print "None. Connect to the Internet to get your public IP"
+         break
+
+      if not h and verify:
+         print "IP ADDRESS\tTIME\tHOST"
+         h = True
+
+      host = hosts.pop(int(time())%len(hosts))
+      c = time()
+      ip = fetchIP(host)
+      c = time() - c
+      if ip:
+         open(cache_name, "w").write("%d\n%s"%(time(),ip))
+         if not verify:
+            print ip
+            break
+         else:
+            print "%s\t%0.2f\t%s"%(ip,c,host)
+      else:
+         if verify:
+            print "Failed\t\t%0.2f\t%s"%(c,host)
+         continue
