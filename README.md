@@ -21,3 +21,11 @@ Check `/proc/acpi/button/lid/` with `ls -lah` or just `ls -l` to get a listing o
 #### LPM license
 
 Originally created by `Vorell` on `irc.anthrochat.com` in `linuxfurs`.
+
+## .bashrc
+
+The `.bashrc` file as well as `ip` are to be used on a server. `ip` is meant more so if you'd prefer to use a python-based script to get your IP. My .bashrc has `IPv4` and `IPv6` detection. It's simple, fast and easy.
+
+## RaspbianPackages.sh
+
+`RaspbianPackages.sh` is a script that installs various things on a Raspbian rPi.
