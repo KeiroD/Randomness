@@ -106,6 +106,6 @@ echo -e ${SC}You are on ${PR}`cat /etc/issue.net`${SC}, with ${PR}`uname -a | aw
 echo -e ${PR}`hostname`\'s IPv4${SC} IP address is: ${PR}`curl -s -4 http://icanhazip.com/`
 echo -e ${PR}`hostname`\'s IPv6${SC} IP address is: ${PR}`curl -s -6 http://icanhazip.com/`
 echo -e ${PR}`hostname`\'s${SC} uptime is: ${PR}`uptime | awk -F'( |,|:)+' '{print $6,$7",",$8,"hours,",$9,"minutes."}'` ${PR}`who|wc -l`${SC} users are currently logged into the server.
-echo -e ${PR}$USER${SC}, your current load average is: ${PR}`uptime | awk /'average/{print $8}'`${SC} and ${PR}`uptime | awk /'average/{print $9}'` ${SC}over a 5 minutes period, with ${PR}`uptime | awk /'average/{print $10}'` ${SC}over a 15 minute period.
+echo -e ${PR}$USER${SC}, your current load average is: ${PR}`cat /proc/loadavg | awk '{print $1}'`${SC} and ${PR}`cat /proc/loadavg | awk '{print $2}'` ${SC}over a 5 minutes period, with ${PR}`cat /proc/loadavg | awk '{print $3}'` ${SC}over a 15 minute period.
 echo -e ${PR}$USER${SC}, you have ${PR}`top -n 1 | awk /'Tasks/{print $2}'` ${SC}tasks running.
 echo
