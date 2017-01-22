@@ -60,7 +60,7 @@ xftalpha 0.8
 TEXT
 
 ${offset 240}${color slate grey}${time %a, } ${color }${time %B %e %G}
-${offset 240}${color slate grey}${time %Z,    }${color }${time %I:%M:%S}
+${offset 240}${color slate grey}${time %Z,    }${color }${time %I:%M:%S %p}
 ${offset 240}${color slate grey}Uptime: ${color }$uptime
 ${offset 240}${color slate grey}Kernel:${color }$kernel
 ${offset 240}${color slate grey}CPU:${color } $cpu% ${acpitemp}C
