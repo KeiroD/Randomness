@@ -15,8 +15,4 @@ alias ddoscheck='sudo netstat -antp | awk '{print$5}' | cut -d':' -f1 | uniq -c 
 alias emberberry='ssh emberberry.heimkoma.com'
 
 # Alias for SSH
-#alias starlight='ssh starlight.eidolonhost.com -l root'
-alias helmsgate='ssh helmsgate.eidolonhost.com -l root'
-alias eidolon='ssh eidolonhost.com -l eidolon'
 alias lysharia='ssh lysharia.com -l lysharia'
-alias eh='ssh eidolonhost.com -l root'
