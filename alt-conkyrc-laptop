@@ -1,0 +1,87 @@
+conky.config={
+background = true,
+use_xft = true,
+font = 'DroidSans:size=7.5',
+xftalpha = 1,
+update_interval = 5,
+total_run_times = 0,
+own_window = true,
+own_window_type = 'normal',
+own_window_hints='undecorated, below, sticky, skip_taskbar, skip_pager',
+own_window_transparent = true,
+double_buffer = true,
+draw_shades = true,
+draw_outline = true,
+draw_borders = false,
+stippled_borders = 1,
+border_width = 1,
+default_color = 'cb99e9',
+default_shade_color = '000000',
+default_outline_color = '000000',
+alignment = 'top_right',
+gap_x = 5,
+gap_y = 5,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 1,
+net_avg_samples = 1,
+override_utf8_locale = false,
+use_spacer = right,
+};
+
+conky.text = [[
+Logged in as... ${alignr}$user_names
+Today is: ${alignr}${time %a %b %d %Y}
+${alignc}Welcome to $nodename
+${hr}
+${font monofur:size=10:bold}${alignc}System${font}
+Distro: ${alignr}${exec lsb_release -d | grep "Description:" | cut -c14-36}
+Kernel: ${alignr}$kernel $machine
+Uptime: ${alignr}$uptime
+${hr}
+${font monofur:size=10:bold}${alignc}Realtime${font}
+${font StyleBats:size=9}A${font} CPU1: ${freq_g cpu1} GHz, ${cpu cpu1}% ${alignr}${cpubar cpu1 3,75}
+${font StyleBats:size=9}A${font} CPU2: ${freq_g cpu2} GHz, ${cpu cpu2}% ${alignr}${cpubar cpu2 3,75}
+${font StyleBats:size=9}Y${font} CPU1 Temp: ${alignr}${execi 5 sensors | grep "Core 0:" | cut -c17-18} C
+${font StyleBats:size=9}Y${font} CPU2 Temp: ${alignr}${execi 5 sensors | grep "Core 1:" | cut -c17-18} C
+Load Avg: ${alignr}$loadavg
+CPU Usage by App:${hr}
+Name ${goto 122}Cpu% ${alignr}Mem%
+${top name 1} ${goto 122}${top cpu 1} ${alignr}${top mem 1}
+${top name 2} ${goto 122}${top cpu 2} ${alignr}${top mem 2}
+${top name 3} ${goto 122}${top cpu 3} ${alignr}${top mem 3}
+${top name 4} ${goto 122}${top cpu 4} ${alignr}${top mem 4}
+${cpugraph cpu1 20,200 e67100 fff200}
+${cpugraph cpu2 20,200 e67100 fff200}
+${hr}
+RAM: ${alignr}$mem/$memmax
+${font StyleBats:size=9}${font}Mem: $memperc% ${alignr}${membar 3,100}
+RAM Usage by App:${hr}
+Name ${goto 122}Mem% ${alignr}Cpu%
+${top_mem name 1} ${goto 122}${top_mem mem 1} ${alignr}${top_mem cpu 1}
+${top_mem name 2} ${goto 122}${top_mem mem 2} ${alignr}${top_mem cpu 2}
+${top_mem name 3} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 3}
+${top_mem name 4} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 4}
+${top_mem name 5} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 5}
+${top_mem name 6} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 6}
+${memgraph 30,200 ff1493 ff7f50}
+${hr}
+${font StyleBats:size=9}g${font} Swap: $swapperc%  ${alignr}${swapbar 3,100}
+Processes:  $processes ${alignr}Running:  $running_processes
+${hr}
+${font monofur:size=10:bold}${alignc}Disks$font
+${font StyleBats:size=9}U${font} /dev/sda ${alignr}Read: ${diskiograph_read /dev/sda 8,60 003e86 00bfff}
+${alignr}Write: ${diskiograph_write /dev/sda 8,60 003e86 00bfff}
+Mint Install: ${alignr}${fs_used /}/${fs_size /}
+${fs_bar 3,200 /}
+${hr}
+${font monofur:size=10:bold}${alignc}Networking$font
+Local IP: ${alignr}${addr wlp1s0}
+External IP: ${alignr}${execi 3600 wget http://ipinfo.io/ip -qO -}
+${font PizzaDude Bullets:size=8}T${font} D: ${color ff0000}${totaldown wlp1s0}${color} ${alignc}@ ${alignr}${color red}${downspeedf wlp1s0}kB/s$color
+${downspeedgraph wlp1s0 20,200 B5273C ff0000}
+${font PizzaDude Bullets:size=8}N${font} U: ${color 00ff00}${totalup wlp1s0}${color} ${alignc}@ ${alignr}${color 00ff00}${upspeedf wlp1s0}kB/s$color
+${upspeedgraph wlp1s0 20,200 006E55 00ff00}
+Battery ${battery} ${alignr}${battery_time}
+${battery_bar 5,200}
+]]
