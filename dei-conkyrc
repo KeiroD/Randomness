@@ -1,0 +1,219 @@
+# Conky sample configuration
+#
+# the list of variables has been removed from this file in favour
+# of keeping the documentation more maintainable.
+# Check http://conky.sf.net for an up-to-date-list.
+
+# set to yes if you want Conky to be forked in the background
+background yes
+
+# X font when Xft is disabled, you can pick one with program xfontsel
+#font 5x7
+#font 6x10
+#font 7x13
+#font 8x13
+#font 9x15
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+
+
+# Use Xft?
+use_xft yes
+xftfont DroidSans:size=7.5
+xftalpha 0.1
+
+# Set conky on the bottom of all other applications
+own_window_hints below
+
+# Xft font when Xft is enabled
+
+
+# Text alpha when using Xft
+xftalpha 1
+
+# Print everything to stdout?
+# out_to_console no
+
+# MPD host/port
+# mpd_host localhost
+# mpd_port 6600
+# mpd_password tinker_bell
+
+# Print everything to console?
+# out_to_console no
+
+# mail spool
+#mail_spool $MAIL
+
+# Update interval in seconds
+update_interval 1
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_hints below
+
+# Use pseudo transparency with own_window?
+own_window_transparent yes
+
+# If own_window_transparent is set to no, you can set the background 
+#colour here
+#own_window_color hotpink
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+#minimum_size 250 1000
+
+# Draw shades?
+draw_shades yes
+
+# Draw outlines?
+draw_outline yes
+
+# Draw borders around text
+draw_borders no
+
+# Stippled borders?
+stippled_borders 1
+
+# border margins
+#border_margin 10
+
+# border width
+border_width 1
+
+# Default colors and also border colors
+default_color cb99e9
+default_shade_color 000000
+default_outline_color 000000
+
+# Text alignment, other possible values are commented
+#alignment top_left
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+#alignment none
+
+# Gap between borders of screen and text
+# same thing as passing -x at command line
+gap_x 5
+gap_y 5
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 1
+
+# number of net samples to average
+# set to 1 to disable averaging
+net_avg_samples 1
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+
+# Add spaces to keep things from moving about?  This only affects 
+#certain objects.
+use_spacer right
+
+#   mldonkey_hostname     Hostname for mldonkey stuff, defaults to localhost
+#   mldonkey_port         Mldonkey port, 4001 default
+#   mldonkey_login        Mldonkey login, default none
+#   mldonkey_password     Mldonkey password, default none
+
+# boinc (seti) dir
+# seti_dir /opt/seti
+
+# Allow for the creation of at least this number of port monitors (if 0 or not set, default is 16) 
+#min_port_monitors 16
+
+# Allow each port monitor to track at least this many connections (if 0 or not set, default is 256)
+#min_port_monitor_connections 256
+
+# variable is given either in format $variable or in ${variable}. Latter
+# allows characters right after the variable and must be used in network
+# stuff because of an argument
+
+# stuff after 'TEXT' will be formatted on screen
+
+TEXT
+Logged in as... ${alignr} ${pre_exec whoami}
+Today is: ${alignr}${time %a %b %d %Y}
+${alignc}Welcome to $nodename
+${hr}
+${font monofur:style=Bold:size=10}${alignc}System${font}
+Distro: ${alignr}${pre_exec cat /etc/issue | grep Mint | cut -c1-13} $machine
+Kernel: ${alignr}$sysname $kernel
+Uptime: ${alignr}$uptime
+${hr}
+${font Monofur:style=Bold:size=10}${alignc}Realtime$font
+${font StyleBats:size=9}A${font} CPU1: ${freq_g cpu1} GHz, ${cpu cpu1}% ${alignr}${cpubar cpu1 3,75}
+${font StyleBats:size=9}A${font} CPU2: ${freq_g cpu2} GHz, ${cpu cpu2}% ${alignr}${cpubar cpu2 3,75}
+${font StyleBats:size=9}A${font} CPU3: ${freq_g cpu3} GHz, ${cpu cpu3}% ${alignr}${cpubar cpu3 3,75}
+${font StyleBats:size=9}A${font} CPU4: ${freq_g cpu4} GHz, ${cpu cpu4}% ${alignr}${cpubar cpu4 3,75}
+${font StyleBats:size=9}Y${font} Internal CPU Temp: ${alignr}${execi 5 sensors k10temp-* | grep "temp1:" | cut -c16-19} C
+${font StyleBats:size=9}Y${font} External CPU Temp: ${alignr}${execi 5 sensors *-acpi-* | grep "CPU Temperature:" | cut -c22-25} C
+${font StyleBats:size=9}Y${font} Motherboard Temp: ${alignr}${execi 5 sensors *-acpi-* | grep "MB Temperature:" | cut -c22-25} C
+${font StyleBats:size=9}Y${font} Video Temp: ${alignr}${execi 5 nvidia-settings -query gpucoretemp | grep "  Attribute 'GPUCoreTemp' (Melchior-II:0.0):" | cut -c46-47} C
+${font StyleBats:size=9}Y${font} HDD Temp: ${alignr}${execi 5 hddtemp /dev/sda -numeric} C
+${font StyleBats:size=9}F${font} CPU Fan Speed: ${alignr}${execi 5 sensors *-acpi-* | grep "CPU FAN Speed:" | cut -c20-23} RPM
+${font StyleBats:size=9}Y${font} Vcore Voltage: ${alignr}${execi 5 sensors *-acpi-* | grep "Vcore Voltage:" | cut -c20-25} VDC
+${font StyleBats:size=9}Y${font} +3.3 Voltage: ${alignr}${execi 5 sensors *-acpi-* | grep "+3.3 Voltage:" | cut -c20-25} VDC
+${font StyleBats:size=9}Y${font} +5 Voltage: ${alignr}${execi 5 sensors *-acpi-* | grep "+5 Voltage:" | cut -c20-25} VDC
+${font StyleBats:size=9}Y${font} +12 Voltage: ${alignr}${execi 5 sensors *-acpi-* | grep "+12 Voltage:" | cut -c20-25} VDC
+Load Avg: ${alignr}$loadavg
+CPU Usage by App:${hr}
+Name ${goto 122}Cpu% ${alignr}Mem%
+${top name 1} ${goto 122}${top cpu 1} ${alignr}${top mem 1}
+${top name 2} ${goto 122}${top cpu 2} ${alignr}${top mem 2}
+${top name 3} ${goto 122}${top cpu 3} ${alignr}${top mem 3}
+${top name 4} ${goto 122}${top cpu 4} ${alignr}${top mem 4}
+${cpugraph cpu1 20,200 e67100 fff200}
+${cpugraph cpu2 20,200 e67100 fff200}
+${cpugraph cpu3 20,200 e67100 fff200}
+${cpugraph cpu4 20,200 e67100 fff200}
+${hr}
+RAM: ${alignr}$mem/$memmax
+${font StyleBats:size=9}${font}Mem: $memperc% ${alignr}${membar 3,100}
+RAM Usage by App:${hr}
+Name ${goto 122}Mem% ${alignr}Cpu%
+${top_mem name 1} ${goto 122}${top_mem mem 1} ${alignr}${top_mem cpu 1}
+${top_mem name 2} ${goto 122}${top_mem mem 2} ${alignr}${top_mem cpu 2}
+${top_mem name 3} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 3}
+${top_mem name 4} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 4}
+${top_mem name 5} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 5}
+${top_mem name 6} ${goto 122}${top_mem mem 3} ${alignr}${top_mem cpu 6}
+${memgraph 30,200 ff1493 ff7f50}
+${hr}
+${font StyleBats:size=9}g${font} Swap: $swapperc%  ${alignr}${swapbar 3,100}
+Processes:  $processes ${alignr}Running:  $running_processes
+${hr}
+${font monofur:style=Bold:size=10}${alignc}Disks$font
+${font StyleBats:size=9}U${font} /dev/sda ${alignr}Read: ${diskiograph_read /dev/sda 8,60 003e86 00bfff}
+${font StyleBats:size=9}Y${font} Temp: ${execi 5 hddtemp /dev/sda -numeric}C ${alignr}Write: ${diskiograph_write /dev/sda 8,60 003e86 00bfff}
+Mint Install: ${alignr}${fs_used /}/${fs_size /}
+${fs_bar 3,200 /}
+#Media Drive: ${alignr}${fs_used /media/azmaria/66209271209247C7}/${fs_size /media/azmaria/66209271209247C7}
+#${fs_bar 3,200 /media/azmaria/66209271209247C7}
+#Windows Install: ${alignr}${fs_used /media/azmaria/1E008E35008E13C5}/${fs_size /media/azmaria/1E008E35008E13C5}
+#${fs_bar 3,200 /media/azmaria/1E008E35008E13C5}
+${hr}
+${font monofur:style=bold:size=10}${alignc}Networking$font
+Local IP: ${alignr}${pre_exec ifconfig eth1 | grep inet\ addr | cut -c21-33}
+External IP: ${alignr}${execi 3600 wget www.ipinfo.io/ip  -qO -}
+${font PizzaDude Bullets:size=8}T${font} D: ${color ff0000}${totaldown eth1}${color} ${alignc}@ ${alignr}${color red}${downspeedf eth1}kB/s$color
+${downspeedgraph eth1 20,200 B5273C ff0000}
+${font PizzaDude Bullets:size=8}N${font} U: ${color 00ff00}${totalup eth1}${color} ${alignc}@ ${alignr}${color #00ff00}${upspeedf eth1}kB/s$color
+${upspeedgraph eth1 20,200 006E55 00ff00}
