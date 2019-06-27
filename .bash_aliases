@@ -12,10 +12,7 @@ alias sd='sudo shutdown -H -P now'
 alias updates='sudo apt update && sudo apt list --upgradable && sudo apt upgrade -y && sudo apt autoremove'
 alias restart='sudo shutdown -r now'
 alias ddoscheck='sudo netstat -antp | awk '{print$5}' | cut -d':' -f1 | uniq -c | sort -r'
-alias emberberry='ssh emberberry.heimkoma.com'
-
-# Alias for SSH
-alias lysharia='ssh lysharia.com -l lysharia'
+alias rr='if [ -f /var/run/reboot-required ]; then echo "Reboot required; please reboot at your earliest convenience."; else echo "No reboot needed at this time."; fi'
 
 # Useful stuff for SSH
 function st () {
